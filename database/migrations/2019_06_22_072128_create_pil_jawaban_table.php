@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSiswaTable extends Migration
+class CreatePilJawabanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateSiswaTable extends Migration
      */
     public function up()
     {
-        Schema::create('siswa', function (Blueprint $table) {
+        Schema::create('pil_jawaban', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('NIS');
-            $table->string('nama_lengkap');
-            $table->string('jenis_kelamin');
-            $table->string('kelas');
-            $table->string('jurusan');
+            $table->string('soal_id');
+            $table->string('jawaban1');
+            $table->string('jawaban2');
+            $table->string('jawaban3');
+            $table->string('jawaban4');
+            $table->string('jawaban_benar');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateSiswaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('pil_jawaban');
     }
 }
