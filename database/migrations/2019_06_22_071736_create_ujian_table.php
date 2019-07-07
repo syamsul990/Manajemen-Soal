@@ -16,9 +16,8 @@ class CreateUjianTable extends Migration
         Schema::create('ujian', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('mapel_id');
-            $table->string('nama_ujian');
-            $table->date('tgl');
-            $table->time('waktu');
+            $table->string('jenis_ujian');
+            $table->date('tanggal');
             $table->string('kelas');
             $table->string('jurusan');
             $table->timestamps();

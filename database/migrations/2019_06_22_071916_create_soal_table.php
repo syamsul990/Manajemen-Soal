@@ -18,6 +18,7 @@ class CreateSoalTable extends Migration
             $table->string('mapel_id');
             $table->string('jenis');
             $table->string('soal');
+            $table->string('image');
             $table->string('kunci_jwbn');
             $table->timestamps();
         });

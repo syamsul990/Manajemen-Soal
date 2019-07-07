@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'guru' => [
+            'driver' => 'session',
+            'provider' => 'guru',
+        ],
+
+        'Siswa' => [
+            'driver' => 'session',
+            'provider' => 'Siswa',
+        ],
     ],
 
     /*
@@ -71,6 +81,16 @@ return [
             'model' => App\User::class,
         ],
 
+        'guru' =>[
+            'driver' => 'eloquent',
+            'model' => App\Guru::class,
+        ]
+        ,
+        'Siswa' =>[
+            'driver' => 'eloquent',
+            'model' => App\Siswa::class,
+        ]
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -95,6 +115,11 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'guru' => [
+            'provider' => 'guru',
             'table' => 'password_resets',
             'expire' => 60,
         ],
