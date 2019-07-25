@@ -24,7 +24,7 @@ class GuruController extends Controller
 
     public function create(Request $request)
     {
-        $data = $request->all();
+        $data = $request->all() ;
         //randmon password
          $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
          $charactersLength = strlen($characters);
@@ -102,7 +102,7 @@ class GuruController extends Controller
                 Soal::create($soal);
             }
 
-            return view('/home');
+            return view('/dashboard');
 
     }
 
