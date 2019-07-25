@@ -4,7 +4,7 @@
     <div class="main">
         <div class="main-content">
             <div class="container-fluid">
-
+               
                 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
                 Tambah Guru
                 </button>

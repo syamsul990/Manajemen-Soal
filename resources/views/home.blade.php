@@ -19,14 +19,8 @@
                 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
                         Tambah Siswa
                 </button>
+                <br>
                 <div class="panel panel-headline">
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-
 						<div class="panel-heading">
 							<h3 class="panel-title">Weekly Overview</h3>
 							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>

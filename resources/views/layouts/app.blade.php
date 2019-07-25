@@ -18,6 +18,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script>
+        axios.post('/api/login', {email: 'rizkhanamrullah@gmail.com', password: 'uGfc2'}).then(result =>{
+            console.log(result.data);
+        })
+    </script>
 </head>
 <body>
     <div id="app">

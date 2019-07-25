@@ -58,7 +58,7 @@ class AuthController extends Controller
                 ]
             ]);
         }
-        // dd($user->avatar_url);
+        // return  $user->avatar_url;
         return response()->json([
             'data' => [
                 'nama_lengkap' => $siswa['nama_lengkap'],
