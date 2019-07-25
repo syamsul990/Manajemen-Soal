@@ -69,7 +69,7 @@ class AuthController extends Controller
                 'semester' => $siswa['semester'],
                 'thn_angkatan' => $siswa['thn_angkatan'],
                 'email' => $user->email,
-                'avatar' => $user->avatar_url
+                'avatar' => $user['avatar']
             ],
             'meta' => [
                 'message'=>"success",
