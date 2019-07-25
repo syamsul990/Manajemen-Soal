@@ -12,7 +12,6 @@
 */
 
 Route::get('/', function () {
-<<<<<<< HEAD
     return redirect('/login');
 });
 
@@ -52,28 +51,3 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/guru/tambah_soal','GuruController@soal');
     Route::get('/guru/input_soal','GuruController@inputSoal');
 });
-=======
-    return view('welcome');
-});
-Route::get('/admins','SiswaController@index');
-
-Route::get('/admins/siswa','SiswaController@index');
-Route::get('/admins/siswa/Multimedia','SiswaController@multimedia');
-Route::get('/admins/siswa/Pemasaran','SiswaController@pemasaran');
-Route::get('/admins/siswa/Akuntansi','SiswaController@akuntansi');
-
-Route::post('/admins/siswa/create','SiswaController@create');
-Route::get('/admins/siswa/{id}/edit','SiswaController@edit');
-Route::post('/admins/siswa/{id}/update','SiswaController@update');
-route::get('/admins/siswa/{id}/delete','SiswaController@delete');
-
-Route::get('/admins/pengajar','PengajarController@index');
-Route::post('/admins/pengajar/create','PengajarController@create');
-Route::get('/admins/pengajar/{id}/edit','PengajarController@edit');
-Route::post('/admins/pengajar/{id}/update','PengajarController@update');
-route::get('/admins/pengajar/{id}/delete','PengajarController@delete');
-
-Route::get('/guru','GuruController@index');
-Route::get('/guru/soal','GuruController@soal');
-Route::get('/guru/soal/input','GuruController@inputSoal');
->>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2

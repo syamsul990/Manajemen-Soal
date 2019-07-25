@@ -46,19 +46,6 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-<<<<<<< HEAD
-=======
-
-        'guru' => [
-            'driver' => 'session',
-            'provider' => 'guru',
-        ],
-
-        'Siswa' => [
-            'driver' => 'session',
-            'provider' => 'Siswa',
-        ],
->>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
     ],
 
     /*
@@ -84,19 +71,6 @@ return [
             'model' => App\User::class,
         ],
 
-<<<<<<< HEAD
-=======
-        'guru' =>[
-            'driver' => 'eloquent',
-            'model' => App\Guru::class,
-        ]
-        ,
-        'Siswa' =>[
-            'driver' => 'eloquent',
-            'model' => App\Siswa::class,
-        ]
-
->>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -124,14 +98,6 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
-<<<<<<< HEAD
-=======
-        'guru' => [
-            'provider' => 'guru',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
->>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
     ],
 
 ];
