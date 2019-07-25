@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,14 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd(auth()->user()->level);
         if(auth()->user()->level == 1){
             return view('home');
          }
          elseif(auth()->user()->level == 2) {
              return view('dashboard');
          }
-         else {
-             redirect()->back()->withErrors(['level'=>'Anda Tidak Memiliki Akses Ke Halaman ini!']);
+         elseif(auth()->user()->level == 3) {
+            Auth::logout();
+             return redirect()->back()->withErrors(['level'=>'Anda Tidak Memiliki Akses Ke Halaman ini!']);
          }
     }
 

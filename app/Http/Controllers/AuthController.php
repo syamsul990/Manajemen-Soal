@@ -46,6 +46,15 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request['email'])->first();
+        if ($user->level !== 3) {
+            return response()->json([
+                'data' => null,
+                'meta' => [
+                    'message'=>"Anda Tidak Berhak Mengakses Halaman Ini",
+                    'status_code'=> 406,
+                ]
+            ]);
+        }
         return response()->json([
             'data' => $user,
             'meta' => [
@@ -53,5 +62,6 @@ class AuthController extends Controller
                 'status_code'=> 200,
             ]
         ]);
+
     }
 }

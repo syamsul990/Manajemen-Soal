@@ -9,6 +9,7 @@ use App\Notifications\SendPassword;
 use App\User;
 use Storage;
 use Avatar;
+use Validator;
 class SiswaController extends Controller
 {
     public function index(Request $request)
@@ -45,6 +46,15 @@ class SiswaController extends Controller
 
     public function create(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
         $data = $request->all();
         //randmon password
          $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
