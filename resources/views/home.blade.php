@@ -107,7 +107,19 @@
                     <option value="Pemasaran">Pemasaran</option>
                     </select>
                 </div>
-            </div>
+                <div class="form-group">
+                    <h5>Semester</h5>
+                        <select name="semester" class="form-control" id="exampleFormControlSelect1">
+                        <option value="Ganjil">Ganjil</option>
+                        <option value="Genap">Genap</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <h5>Tahun Angkatan</h5>
+                        <input name="thn_angkatan" type="text" class="form-control" id="#"  placeholder="Tahun Angkatan">
+                    </div>
+
+                </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save</button>
