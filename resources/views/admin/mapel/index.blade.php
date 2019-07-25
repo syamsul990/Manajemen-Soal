@@ -23,6 +23,7 @@
                         <th>Mata Pelajaran</th>
                         <th>Kelas</th>
                         <th>Jurusan</th>
+                        <th>Pengajar</th>
                         <th>Status</th>
                         <th>Action</th>
 											</tr>
@@ -34,6 +35,7 @@
                             <td>{{ $mapel->nama_pelajaran }}</td>
                             <td>{{ $mapel->kelas }}</td>
                             <td>{{ $mapel->jurusan }}</td>
+                            <td>{{ $mapel->guru_id }}</td>
                             <td>
                                     <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
                                     <script>
@@ -88,7 +90,7 @@
 
             <div class="form-group">
                 <h5>Kelas</h5>
-                    <select name="kelas" class="form-control" id="exampleFormControlSelect1">
+                    <select name="kelas" class="form-control" id="kelas">
                     <option value="1">Kelas 1</option>
                     <option value="2">Kelas 2</option>
                     <option value="3">Kelas 3</option>
@@ -97,12 +99,21 @@
 
             <div class="form-group">
                 <h5>Jurusan</h5>
-                    <select name="jurusan" class="form-control" id="exampleFormControlSelect1">
+                    <select name="jurusan" class="form-control" id="jurusan">
                     <option value="Multimedia">Multimedia</option>
                     <option value="Akuntansi">Akuntansi</option>
                     <option value="Pemasaran">Pemasaran</option>
                     </select>
             </div>
+
+            <div class="form-group">
+                <h5>Semester</h5>
+                    <select name="semester" class="form-control" id="semester">
+                    <option value="Ganjil">Ganjil</option>
+                    <option value="Genap">Akuntansi</option>
+                    </select>
+            </div>
+
 
 
       </div>

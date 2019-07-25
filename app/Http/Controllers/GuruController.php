@@ -11,6 +11,7 @@ use Storage;
 use Avatar;
 use App\Ujian;
 use App\Soal;
+use App\Mapel;
 class GuruController extends Controller
 {
     public function index(Request $request)
@@ -76,13 +77,14 @@ class GuruController extends Controller
     }
 
     public function soal(Request $request){
-
-        if($request->has('jum_soal')){
+        $mapel = Mapel::get();
+        if($request->has('jum_soal') && $request->has('kd_mapel')){
             \App\Ujian::create($request->all());
             $jum_soal = $request->jum_soal;
-            return view('guru/input_soal', compact('jum_soal'));
+            $kd_mapel =  $request->kd_mapel;
+            return view('guru/input_soal', compact('jum_soal', 'kd_mapel'));
         }
-        return view('guru/tambah_soal');
+        return view('guru/tambah_soal', compact('mapel'));
     }
 
     public function inputSoal(Request $request){
@@ -103,4 +105,6 @@ class GuruController extends Controller
             return view('/home');
 
     }
+
+
 }

@@ -26,36 +26,28 @@
                                             <option value="UTS">Ujian Tengah Semester</option>
                                             </select>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label for="Kelas">Kelas</label>
-                                            <select name="kelas" class="form-control" id="Kelas">
-                                            <option value="1">Kelas 1</option>
-                                            <option value="2">Kelas 2</option>
-                                            <option value="3">Kelas 3</option>
-                                            </select>
-                                        </div>
                                         <div class="form-group">
                                             <label for="Jurusan">Jurusan</label>
                                             <select name="jurusan" class="form-control" id="Jurusan">
-                                            <option value="Multimedia">Multimedia</option>
-                                            <option value="Akuntansi">Akuntansi</option>
-                                            <option value="Pemasaran">Pemasaran</option>
+                                                @foreach ($mapel as $mpl)
+                                                    <option value="{{$mpl->jurusan}}">{{$mpl->jurusan}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                                <label for="nama_pelajaran">Matapelajaran</label>
-                                                <select name="nama_pelajaran" class="form-control" id="nama_pelajaran">
-                                                <option value="B-Indonesia">Bahasa Indonesia</option>
-                                                <option value="B-Inggris">Bahasa Inggris</option>
-                                                <option value="Matematika">Matematika</option>
+                                                <label for="kd_mapel">Matapelajaran</label>
+                                                <select name="kd_mapel" class="form-control" id="kd_mapel">
+                                                    @foreach ($mapel as $mpl)
+                                                        <option value="{{$mpl->kd_mapel}}">{{$mpl->nama_pelajaran}} - Kelas : {{ $mpl->kelas }}</option>
+                                                    @endforeach
                                                 </select>
                                         </div>
                                         <div class="form-group">
                                                 <label for="semester">Semester</label>
                                                 <select name="semester" class="form-control" id="semester">
-                                                <option value="Ganjil">Ganjil</option>
-                                                <option value="Genap">Genap</option>
+                                                @foreach ($mapel as $mpl)
+                                                    <option value="{{$mpl->semester}}">{{$mpl->semester}}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                     <br>
