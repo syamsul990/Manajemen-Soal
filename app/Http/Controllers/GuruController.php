@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\SendPasswordGuru;
 use App\User;
@@ -103,27 +102,5 @@ class GuruController extends Controller
 
             return view('/home');
 
-=======
-
-class GuruController extends Controller
-{
-    public function index()
-    {
-        $guru = \App\Guru::all();
-        
-        return view('guru/index');
-    }
-
-    public function soal(Request $request){
-        return view('guru/soal');
-    }
-
-    public function inputSoal(Request $request){
-        if($request->has('jum_soal')){
-            $jum_soal = $request->jum_soal;
-
-            return view('guru/input_soal', compact('jum_soal'));
-        }
->>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
     }
 }
