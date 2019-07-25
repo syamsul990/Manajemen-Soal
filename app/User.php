@@ -5,20 +5,32 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+<<<<<<< HEAD
 use Storage;
 use Avatar;
+=======
+>>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
 
 class User extends Authenticatable
 {
     use Notifiable;
 
+<<<<<<< HEAD
+=======
+    protected $guard = 'user';
+
+>>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+<<<<<<< HEAD
         'name', 'email', 'password','level'
+=======
+        'name', 'email', 'password',
+>>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
     ];
 
     /**
@@ -38,6 +50,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+<<<<<<< HEAD
 
     protected $appends = ['avatar_url'];
 
@@ -55,4 +68,6 @@ class User extends Authenticatable
     // {
     //     return $this->belongsTo(Siswa::class);
     // }
+=======
+>>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
 }
