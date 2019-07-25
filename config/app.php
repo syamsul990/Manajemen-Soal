@@ -161,10 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-<<<<<<< HEAD
         Laravolt\Avatar\ServiceProvider::class,
-=======
->>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
 
         /*
          * Package Service Providers...
@@ -229,11 +226,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-<<<<<<< HEAD
         'Avatar'    => Laravolt\Avatar\Facade::class,
-=======
-
->>>>>>> 33a8915fad837a6b55e6c4b9d80e25e5a3777af2
     ],
 
 ];
