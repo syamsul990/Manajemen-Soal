@@ -14,7 +14,7 @@
 
                     <div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Ed$guru</h3>
+									<h3 class="panel-title">Edit Guru</h3>
 								</div>
 								<div class="panel-body">
                                 <form action="/admin/guru/{{$data_guru->id}}/update" method="POST">
@@ -26,8 +26,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nama Lengkap</label>
-                                            <input name="nama_lengkap" type="text" class="form-control" id="#" aria-describedby="emailHelp" placeholder="Nama Lengkap"
-                                            value="{{$data_guru->nama_lengkap}}">
+                                            <input name="name" type="text" class="form-control" id="#" aria-describedby="emailHelp" placeholder="Nama Lengkap"
+                                            value="{{$user->name}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Jenis Kelamin</label>

@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','level'
+        'name', 'email', 'password','level','avatar'
     ];
 
     /**
@@ -50,6 +50,8 @@ class User extends Authenticatable
         $avatar = Avatar::create($this->name)->getImageObject()->encode('png');
         Storage::put('public/avatars/'.$this->id.'/avatar.png', (string) $avatar);
     }
+
+
 
     // public function user()
     // {

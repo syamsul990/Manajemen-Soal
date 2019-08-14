@@ -1,18 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
+use App\Mapel;
+use Illuminate\Support\Facades\DB;
 class MapelController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-
-        $data_mapel = \App\Mapel::all();
-        // dd($data_mapel);
+        $data_mapel = DB::table('matapelajaran')->where([
+            ['kategori', '=', 'Umum'],
+        ])->get();
         return view('/admin/mapel/index',compact('data_mapel'));
     }
+
+    public function kejuruan(Request $id)
+    {
+        $data_mapel = DB::table('matapelajaran')->where([
+            ['kategori', '=', 'Kejuruan'],
+        ])->get();
+            return view('admin.mapel.kejuruan',compact('data_mapel'));
+    }
+
     public function create(Request $request)
     {
         \App\Mapel::create($request->all());

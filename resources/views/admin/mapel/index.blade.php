@@ -13,7 +13,7 @@
                     <div class="col-md-12">
                     <div class="panel">
 								<div class="panel-heading">
-                    <h3 class="panel-title">Data Matapelajaran</h3>
+                    <h3 class="panel-title">Data Matapelajaran Umum</h3>
 								</div>
 								<div class="panel-body">
 									<table class="table table-hover">
@@ -23,8 +23,6 @@
                         <th>Mata Pelajaran</th>
                         <th>Kelas</th>
                         <th>Jurusan</th>
-                        <th>Pengajar</th>
-                        <th>Status</th>
                         <th>Action</th>
 											</tr>
 										</thead>
@@ -35,18 +33,8 @@
                             <td>{{ $mapel->nama_pelajaran }}</td>
                             <td>{{ $mapel->kelas }}</td>
                             <td>{{ $mapel->jurusan }}</td>
-                            <td>{{ $mapel->guru_id }}</td>
-                            <td>
-                                    <input type="checkbox" data-toggle="toggle" data-on="Enabled" data-off="Disabled">
-                                    <script>
-                                      $(function() {
-                                        $('#toggle-two').bootstrapToggle({
-                                          on: 'Enabled',
-                                          off: 'Disabled'
-                                        });
-                                      })
-                                    </script>
-                            </td>
+
+
                             <td>
                                 <a href="/admin/mapel/{{$mapel->id}}/delete" class="btn btn-danger btn-sm"
                                 onclick="return confirm('Apakah Anda Yakin ?')">Delete</a>
@@ -110,9 +98,17 @@
                 <h5>Semester</h5>
                     <select name="semester" class="form-control" id="semester">
                     <option value="Ganjil">Ganjil</option>
-                    <option value="Genap">Akuntansi</option>
+                    <option value="Genap">Genap</option>
                     </select>
             </div>
+
+            <div class="form-group">
+                    <h5>Kategori</h5>
+                        <select name="kategori" class="form-control" id="kategori">
+                        <option value="Umum">Umum</option>
+                        <option value="Kejuruan">Kejuruan</option>
+                        </select>
+                </div>
 
 
 

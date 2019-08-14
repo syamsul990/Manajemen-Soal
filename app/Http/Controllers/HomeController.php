@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -41,4 +43,14 @@ class HomeController extends Controller
     {
         return view('admin');
     }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        return view('/layouts/profile',['user' =>$user]);
+    }
+
+
+
+
 }

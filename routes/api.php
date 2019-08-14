@@ -18,3 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login','AuthController@login');
+Route::post('getMapelUjian','AuthController@getMapelUjian');
+Route::post('ujianInfo','AuthController@ujianInfo');
+Route::post('getSoal','AuthController@getSoal');
+Route::post('getRiwayat','AuthController@getRiwayat');
+Route::post('getNilai','AuthController@getNilai');
+Route::post('resetPassword','AuthController@resetPassword');
+Route::post('getLogouts', 'AuthController@getLogouts');

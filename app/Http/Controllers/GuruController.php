@@ -12,18 +12,62 @@ use Avatar;
 use App\Ujian;
 use App\Soal;
 use App\Mapel;
+use Validator;
+use Illuminate\Support\Facades\DB;
+use File;
+
 class GuruController extends Controller
 {
     public function index(Request $request)
     {
+        $data_guru = DB::table('users')
+        ->join('guru', 'users.id', '=', 'guru.user_id')
+        ->select('users.*', 'guru.*')
+        ->paginate(10);
 
-        $data_guru = \App\Guru::all();
         // dd($data_guru);
         return view('/admin/guru/index',compact('data_guru'));
     }
 
+    public function multimedia(Request $request)
+    {
+        $data_guru = DB::table('users')
+        ->join('guru', 'users.id', '=', 'guru.user_id')
+        ->select('users.*', 'guru.*')
+        ->where('guru.jurusan', 'Multimedia')
+        ->paginate(10);
+        return view('admin.guru.multimedia',compact('data_guru'));
+    }
+    public function pemasaran(Request $request)
+    {
+        $data_guru = DB::table('users')
+        ->join('guru', 'users.id', '=', 'guru.user_id')
+        ->select('users.*', 'guru.*')
+        ->where('guru.jurusan', 'Pemasaran')
+        ->paginate(10);
+        return view('admin.guru.pemasaran',compact('data_guru'));
+    }
+    public function akuntansi(Request $request)
+    {
+        $data_guru = DB::table('users')
+        ->join('guru', 'users.id', '=', 'guru.user_id')
+        ->select('users.*', 'guru.*')
+        ->where('guru.jurusan', 'Akuntansi')
+        ->paginate(10);
+        return view('admin.guru.Akuntansi',compact('data_guru'));
+    }
     public function create(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
         $data = $request->all() ;
         //randmon password
          $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -32,22 +76,22 @@ class GuruController extends Controller
          for ($i = 0; $i < 5; $i++) {
              $randomString .= $characters[rand(0, $charactersLength - 1)];
          }
-        //  $data['user_id']= auth()->id();
          $data['password'] = $randomString;
          $data['send_password'] = $randomString;
          $data['password'] = Hash::make($data['password']);
          $data['level'] = '2';
-         $data_guru = Guru::create($data);
 
          $user = User::create([
-             'name' => $data['nama_lengkap'],
+             'name' => $data['name'],
              'email' => $data['email'],
              'password' => $data['password'],
              'level' => $data['level'],
              'avatar' => 'avatar.png',
          ]);
-        $avatar = Avatar::create($user->name)->getImageObject()->encode('png');
-        Storage::put('public/avatars/'.$user->_id.'/avatar.png', (string) $avatar);
+         $data['user_id'] = $user->id;
+         $data = Guru::create($data);
+         $avatar = Avatar::create($user->name)->getImageObject()->encode('png');
+         Storage::put('public/avatars/'.$user->id.'/avatar.png', (string) $avatar);
 
          $user->send_password_guru = $randomString;
          $user->notify(new SendPasswordGuru($user));
@@ -58,22 +102,29 @@ class GuruController extends Controller
     public function edit($id)
     {
         $data_guru = \App\Guru::find($id);
-        return view('/admin/guru/edit',compact('data_guru'));
+        $user = User::find($data_guru->user_id);
+        return view('/admin/guru/edit',compact('data_guru','user'));
     }
 
     public function update(Request $request,$id)
     {
         $data_guru = \App\Guru::find($id);
         $data_guru->update($request->all());
-        return redirect('/admin/guru')->with('sukses','Data Berhasil Diupdate');
+        $user = User::find($data_guru->user_id);
+        $user->update(['name' => $request->name]);
+        $avatar = Avatar::create($user->name)->getImageObject()->encode('png');
+        Storage::put('public/avatars/'.$user->id.'/avatar.png', (string) $avatar);
+        return redirect('/admin/guru');
     }
+
 
     public function delete($id)
     {
-        $data_guru = \App\Guru::find($id);
-        $data_guru->delete($data_guru);
-
-        return redirect('/admin/guru')->with('sukses','Data Berhasil Dihapus');
+        $guru = Guru::find($id);
+        $user = User::find($guru->user_id);
+        $guru->delete();
+        $user->delete ();
+        return redirect('/admin/guru');
     }
 
     public function soal(Request $request){
@@ -91,7 +142,9 @@ class GuruController extends Controller
 
             $input = $request->all();
             for($i = 1; $i <= $input['jum_soal']; $i++){
+
                 $soal = [
+                    'ujian' =>$input['ujian'],
                     'soal' => $input['soal' . $i],
                     'jawaban1' => $input['jawaban1-soal' . $i],
                     'jawaban2'=> $input['jawaban2-soal' . $i],
@@ -99,12 +152,48 @@ class GuruController extends Controller
                     'jawaban4'=> $input['jawaban4-soal' . $i],
                     'jawaban_benar' => $input['jawaban_benar-soal' . $i]
                 ];
+                $soal['kd_mapel'] = $request->kd_mapel;
+                if($request->hasFile("image$i")){
+                    $file = $request->file("image$i");
+                    $name = time() . $file->getClientOriginalName();
+                    $path = "public/soal/$name";
+                    Storage::put($path, File::get($file->getRealPath()));
+                    $soal['image'] = $name;
+                }
                 Soal::create($soal);
             }
-
             return view('/dashboard');
-
     }
 
+    public function ubah_password($id)
+    {
+        $user = User::find($id);
+        return view('/layouts/ubah_password', compact('user'));
+    }
 
+    public function resetPassword(Request $request,$id)
+    {
+        $validator = Validator::make($request->all(), [
+            'password_lama' => 'required',
+            'password_baru' => 'required',
+            'konfirmasi_password' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return view('/home')->withErrors(['password_lama'=>'Semua Inputan Harus di Isi !']);
+        }
+
+        if ($request->password_baru !== $request->konfirmasi_password ){
+
+            return view('/home')->withErrors(['konfirmasi_password'=>'Password Tidak Sesuai']);
+        }
+
+        if (!Hash::check($request->password_lama, User::find($id)->makeVisible('password')->password)) {
+            return view('/home')->withErrors(['password_lama'=>'Password Lama Anda Salah!']);
+        }
+        $user =  User::find($id);
+        $user->password=Hash::make($request->password_baru);
+        $user->save();
+        return redirect('/home');
+    }
 }

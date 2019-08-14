@@ -21,8 +21,7 @@ class CreateMataPelajaranTable extends Migration
             $table->string('jurusan');
             $table->string('semester');
             $table->string('guru_id')->nullable();
-            $table->string('status')->default('disable');
-            $table->string('jum_soal');
+            
             $table->timestamps();
         });
     }

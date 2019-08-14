@@ -16,7 +16,7 @@ class CreateJawabanTable extends Migration
         Schema::create('jawaban', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('soal_id');
-            $table->string('siswa_id');
+            $table->string('NIS');
             $table->string('ujian_id');
             $table->string('jawaban');
             $table->string('jawaban_benar');

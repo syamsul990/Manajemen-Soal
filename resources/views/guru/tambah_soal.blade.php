@@ -1,9 +1,19 @@
 @extends('layouts.master_guru')
-
 @section('content')
-
 <div class="main">
         <div class="main-content">
+                @if($errors->any())
+
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                         @foreach ($errors->all() as $error)
+                        <li style="color:red">
+                            {{$error}}
+                        </li>
+                        @endforeach
+                    </ul>
+                  </div>
+                @endif
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -26,19 +36,29 @@
                                             <option value="UTS">Ujian Tengah Semester</option>
                                             </select>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="kelas">Kelas</label>
+                                            <select name="kelas" class="form-control" id="kd_mapel">
+                                                @foreach ($mapel as $mpl)
+                                                    <option value="{{$mpl->kelas}}">{{$mpl->kelas}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="Jurusan">Jurusan</label>
                                             <select name="jurusan" class="form-control" id="Jurusan">
-                                                @foreach ($mapel as $mpl)
-                                                    <option value="{{$mpl->jurusan}}">{{$mpl->jurusan}}</option>
-                                                @endforeach
+                                                    <option value="Pemasaran">Pemasaran</option>
+                                                    <option value="Pemasaran">Akuntansi</option>
+                                                    <option value="Pemasaran">Multimedia</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                                 <label for="kd_mapel">Matapelajaran</label>
                                                 <select name="kd_mapel" class="form-control" id="kd_mapel">
                                                     @foreach ($mapel as $mpl)
-                                                        <option value="{{$mpl->kd_mapel}}">{{$mpl->nama_pelajaran}} - Kelas : {{ $mpl->kelas }}</option>
+                                                        <option value="{{$mpl->kd_mapel}}">{{$mpl->nama_pelajaran}}</option>
                                                     @endforeach
                                                 </select>
                                         </div>
@@ -49,15 +69,18 @@
                                                     <option value="{{$mpl->semester}}">{{$mpl->semester}}</option>
                                                 @endforeach
                                                 </select>
-                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="semester">Waktu Ujian Mulai</label>
+                                            <input name="waktu_mulai" class="date form-control" type="datetime-local">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="semester">Waktu Ujian Selesai</label>
+                                            <input name="waktu_selesai" class="date form-control" type="datetime-local">
+                                        </div>
                                     <br>
                                     <button class="btn btn-primary">Simpan</button>
                                  </form>
-                                    {{-- <form action="/guru/soal/input" method="GET">
-                                        <input type="number" class="form-control" name="jum_soal" placeholder="jumlah soal">
-                                        <button class="btn btn-primary">Simpan</button>
-                                    </form> --}}
-
                             </div>
                         </div>
                     </div>

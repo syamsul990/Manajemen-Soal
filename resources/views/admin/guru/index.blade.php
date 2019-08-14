@@ -3,8 +3,20 @@
 @section('content')
     <div class="main">
         <div class="main-content">
+                @if($errors->any())
+
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                         @foreach ($errors->all() as $error)
+                        <li style="color:red">
+                            {{$error}}
+                        </li>
+                        @endforeach
+                    </ul>
+                  </div>
+                @endif
             <div class="container-fluid">
-               
+
                 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
                 Tambah Guru
                 </button>
@@ -33,7 +45,7 @@
                     @foreach($data_guru as $guru)
                         <tr>
                             <td>{{ $guru->NIP }}</td>
-                            <td>{{ $guru->nama_lengkap }}</td>
+                            <td>{{ $guru->name }}</td>
                             <td>{{ $guru->jenis_kelamin }}</td>
                             <td>{{ $guru->kelas }}</td>
                             <td>{{ $guru->jurusan }}</td>
@@ -47,9 +59,10 @@
                         </tr>
                     @endforeach
 										</tbody>
-									</table>
-								</div>
-							</div>
+                                    </table>
+                                </div>
+                            </div>
+                            {!! $data_guru->links() !!}
                     </div>
                 </div>
             </div>
@@ -73,11 +86,11 @@
 
             <div class="form-group">
                 <h5>NIP</h5>
-                <input name="NIP" type="text" class="form-control" id="#" aria-describedby="emailHelp" placeholder="NIP">
+                <input name="NIP" type="text" class="form-control" id="NIP" aria-describedby="emailHelp" placeholder="NIP">
             </div>
             <div class="form-group">
             <h5>Nama Lengkap</h5>
-                <input name="nama_lengkap" type="text" class="form-control" id="#" aria-describedby="emailHelp" placeholder="Nama Lengkap">
+                <input name="name" type="text" class="form-control" id="nama_lengkap" aria-describedby="emailHelp" placeholder="Nama Lengkap">
             </div>
             <div class="form-group">
             <h5>Jenis Kelamin</h5>
@@ -88,7 +101,7 @@
             </div>
             <div class="form-group">
                     <h5>Email</h5>
-                        <input name="email" type="text" class="form-control" id="#" aria-describedby="emailHelp" placeholder="email">
+                        <input name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email">
                     </div>
             <div class="form-group">
             <h5>Kelas</h5>

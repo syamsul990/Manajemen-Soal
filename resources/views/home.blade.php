@@ -19,11 +19,11 @@
                 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
                         Tambah Siswa
                 </button>
-                <br>
+
                 <div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Weekly Overview</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+							<h3 class="panel-title">Overview</h3>
+							<p class="panel-subtitle">SMKN 1 Kedawung </p>
 						</div>
 						<div class="panel-body">
 							<div class="row">
@@ -31,7 +31,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-user"></i></span>
 										<p>
-											<span class="number">1,252</span>
+											<span class="number">{{ App\Siswa::all()->count() }}</span>
 											<span class="title">Total Siswa</span>
 										</p>
 									</div>
@@ -40,7 +40,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-user"></i></span>
 										<p>
-											<span class="number">203</span>
+											<span class="number">{{ App\Guru::all()->count() }}</span>
 											<span class="title">Total Guru</span>
 										</p>
 									</div>
@@ -49,19 +49,12 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-book"></i></span>
 										<p>
-											<span class="number">274,678</span>
-											<span class="title">Mata Pelajaran</span>
+											<span class="number">{{ App\Mapel::all()->count() }}</span>
+											<span class="title">Matapelajaran</span>
 										</p>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-bar-chart"></i></span>
-										<p>
-											<span class="number">35%</span>
-											<span class="title">Conversions</span>
-										</p>
-									</div>
+
 								</div>
 							</div>
 						</div>
@@ -141,3 +134,5 @@
         </div>
         </div>
 @endsection
+
+

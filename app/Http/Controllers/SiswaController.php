@@ -10,37 +10,45 @@ use App\User;
 use Storage;
 use Avatar;
 use Validator;
+use Illuminate\Support\Facades\DB;
 class SiswaController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->has('search')){
-            $data_siswa = \App\Siswa::where('nama_lengkap','LIKE','%'.$request->search.'%')->get();
-        }else{
-            $data_siswa = \App\Siswa::where('jurusan','Multimedia','%'.$request.'%')->get();
-        }
+        $data_siswa = DB::table('users')
+        ->join('siswa', 'users.id', '=', 'siswa.user_id')
+        ->select('users.*', 'siswa.*')
+        ->get();
         return view('/home',compact('data_siswa'));
     }
 
     public function multimedia(Request $request)
     {
-        if($request->has('search')){
-            $data_siswa = \App\Siswa::where('nama_lengkap','LIKE','%'.$request->search.'%')->get();
-        }else{
-            $data_siswa = \App\Siswa::where('jurusan','Multimedia','%'.$request.'%')->get();
-        }
+        $data_siswa = DB::table('users')
+        ->join('siswa', 'users.id', '=', 'siswa.user_id')
+        ->select('users.*', 'siswa.*')
+        ->where('siswa.jurusan', 'Multimedia')
+        ->get();
         return view('admin.siswa.multimedia',compact('data_siswa'));
     }
 
     public  function pemasaran(Request $request)
     {
-        $data_siswa = \App\Siswa::where('jurusan','Pemasaran','%'.$request.'%')->get();
+        $data_siswa = DB::table('users')
+        ->join('siswa', 'users.id', '=', 'siswa.user_id')
+        ->select('users.*', 'siswa.*')
+        ->where('siswa.jurusan', 'Pemasaran')
+        ->get();
         return view('admin.siswa.pemasaran',compact('data_siswa'));
     }
 
     public  function akuntansi(Request $request)
     {
-        $data_siswa = \App\Siswa::where('jurusan','Akuntansi','%'.$request.'%')->get();
+        $data_siswa = DB::table('users')
+        ->join('siswa', 'users.id', '=', 'siswa.user_id')
+        ->select('users.*', 'siswa.*')
+        ->where('siswa.jurusan', 'Akuntansi')
+        ->get();
         return view('admin.siswa.akuntansi',compact('data_siswa'));
     }
 
@@ -68,8 +76,6 @@ class SiswaController extends Controller
          $data['send_password'] = $randomString;
          $data['password'] = Hash::make($data['password']);
          $data['level'] = 3;
-        //  $data['id_user'] = $data->id();
-         $siswa = Siswa::create($data);
 
          //membuat ke tabel user
          $user = User::create([
@@ -79,33 +85,43 @@ class SiswaController extends Controller
              'level' => $data['level'],
              'avatar' => 'avatar.png',
          ]);
+         $data['user_id'] = $user->id;
+         $data_siswa = Siswa::create($data);
 
-        $user->makeAvatar();
+        $avatar = Avatar::create($user->name)->getImageObject()->encode('png');
+        Storage::put('public/avatars/'.$user->id.'/avatar.png', (string) $avatar);
+
         $user->send_password = $randomString;
         $user->notify(new SendPassword($user));
 
-         return redirect('/home')->with('sukses','Data Berhasil Ditambahkan');
+         return redirect('/home');
     }
 
     public function edit($id)
     {
-        $siswa = \App\Siswa::find($id);
-        return view('/admin/siswa/edit',compact('siswa'));
+        $data_siswa = \App\Siswa::find($id);
+        $user = User::find($data_siswa->user_id);
+        return view('/admin/siswa/edit',compact('data_siswa','user'));
     }
 
     public function update(Request $request,$id)
     {
-        $siswa = \App\Siswa::find($id);
-        $siswa->update($request->all());
-        return redirect('/admin/siswa')->with('sukses','Data Berhasil Diupdate');
+        $data_siswa = \App\Siswa::find($id);
+        $data_siswa->update($request->all());
+        $user = User::find($data_siswa->user_id);
+        $user->update(['name' => $request->name]);
+        $avatar = Avatar::create($user->name)->getImageObject()->encode('png');
+        Storage::put('public/avatars/'.$user->id.'/avatar.png', (string) $avatar);
+
+        return redirect('/home');
     }
 
     public function delete($id)
     {
-        $siswa = \App\Siswa::find($id);
-
-
-        $siswa->delete($siswa);
+        $siswa = Siswa::find($id);
+        $user = User::find($siswa->user_id);
+        $siswa->delete();
+        $user->delete ();
         return redirect('/admin/siswa')->with('sukses','Data Berhasil Dihapus');
     }
 }

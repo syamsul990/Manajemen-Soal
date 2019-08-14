@@ -24,7 +24,7 @@ class CreateGuruTable extends Migration
             $table->string('jurusan');
             $table->string('nama_pelajaran')->nullable();
             $table->string('password');
-            $table->string('level');
+            $table->string('level')->nullable();
             $table->timestamps();
         });
     }

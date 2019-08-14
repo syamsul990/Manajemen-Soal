@@ -2,7 +2,7 @@
 <html lang="en" class="fullscreen-bg">
 
 <head>
-	<title>Login | Klorofil - Free Bootstrap Dashboard Template</title>
+	<title>SMKN 1 Kedawung</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -47,6 +47,7 @@
 							<form class="form-auth-small" action="{{ route('login') }}" method="POST">
                                     @csrf
 								<div class="form-group">
+
 									<label for="signin-email" class="control-label sr-only">{{ __('E-Mail Address') }}</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
 
@@ -56,7 +57,7 @@
                                     </span>
                                     @enderror
                                 </div>
-
+								<br>
 								<div class="form-group">
 									<label for="password" class="control-label sr-only">{{ __('Password') }}</label>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
@@ -67,18 +68,9 @@
                                     </span>
                                     @enderror
                                 </div>
-
-								<div class="form-group clearfix">
-									<label class="fancy-checkbox element-left" for="remember">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-										<span>{{ __('Remember Me') }}</span>
-									</label>
-                                </div>
-
+								<br>
 								<button type="submit" class="btn btn-primary btn-lg btn-block"> {{ __('Login') }}</button>
-								<div class="bottom">
-									<span class="helper-text"><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
-								</div>
+
 							</form>
 						</div>
 					</div>

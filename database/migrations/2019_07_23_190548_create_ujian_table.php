@@ -19,7 +19,8 @@ class CreateUjianTable extends Migration
             $table->string('jenis_ujian');
             $table->string('kelas');
             $table->string('jurusan');
-            $table->string('nama_pelajaran');
+            $table->string('kd_mapel');
+            $table->string('waktu_ujian');
             $table->string('semester');
             $table->timestamps();
         });
