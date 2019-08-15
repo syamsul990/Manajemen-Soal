@@ -59,7 +59,7 @@ class AuthController extends Controller
                     'status_code'=> 406,
                 ]
             ]);
-
+            
         }if($valid==1){
             $this->updateToken($token,$request["email"]);
             return response()->json([
@@ -82,7 +82,7 @@ class AuthController extends Controller
                     'status_code'=> 200,
                 ]
             ]);
-           }
+           } 
 
         else{
             return response()->json([
@@ -93,7 +93,7 @@ class AuthController extends Controller
                 ]
             ]);
         }
-
+            
 
     }
     public function getMapelUjian(Request $request){
@@ -102,7 +102,7 @@ class AuthController extends Controller
         $semester = $request->semester;
         $time = Carbon::now();
         $time->toDateTimeString();
-
+        
         $dataMapel = DB::table('matapelajaran')
         ->where('ujian.jurusan', $jurusan)
         ->where('ujian.jenis_ujian', $jenis_ujian)
@@ -139,13 +139,13 @@ class AuthController extends Controller
         if(count($dataSoal)>0){
             foreach($dataSoal as $soal){
                   $datas[] = (object) array_merge((array) $soal, array('nomor' => $no));
-              $no++;
+              $no++;  
             }
             $data = array('status'=>'200','data'=>$datas, 'message'=>'Soal Tersedia!');
 
           return response()->json($data);
         } else {
-            return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Soal tidak tersedia!'));
+            return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Soal tidak tersedia!')); 
         }
     }
 
@@ -164,24 +164,23 @@ class AuthController extends Controller
                 $data = array('status'=>'200','data'=>$dataRiwayat, 'message'=>'Riwayat ujian tersedia!');
               return response()->json($data);
             } else {
-                return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Riwayat ujian tidak tersedia!'));
+                return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Riwayat ujian tidak tersedia!')); 
             }
         }
 
     public function getNilai(Request $request){
-        $jum_benar = $request->jum_benar;
-        $jum_soal = $request->jum_soals;
+        $nilai = $request->nilai;
         $NIS = $request->nis;
         $semester = $request->semesters;
         $kelas = $request->kls;
         $jenis_ujian = $request->jenis_ujians;
         $kd_mapel = $request->kd_mapels;
+        $jurusan = $request->jurusan;
         $tanggal = Carbon::now();
         $tanggal->toDateString();
         $time = $request->time;
-
-        $nilai = ($jum_benar/$jum_soal)*100;
-
+      
+    
         $histori = array(
             'NIS'=>$NIS,
             'kd_mapel'=>$kd_mapel,
@@ -190,7 +189,8 @@ class AuthController extends Controller
             'waktu'=>$time,
             'tanggal'=>$tanggal,
             'semester'=>$semester,
-            'kelas'=>$kelas
+            'kelas'=>$kelas,
+            'jurusan'=>$jurusan
         );
 
         Histori::create($histori);
@@ -201,11 +201,11 @@ class AuthController extends Controller
         public function resetPassword(Request $request){
             $email = $request->email;
             $password = $request->password;
-
+          
             if(User::where('email',$email)->where('level',3)->exists()){
                 $reset = ['password'=>Hash::make($password)];
                 User::where('email',$email)->update($reset);
-
+                
                 $respon = array('status'=>200,'data'=>'No Data', 'messages'=>'Update Sukses!');
                 return response()->json($respon);
             } else {
@@ -225,22 +225,22 @@ class AuthController extends Controller
                     return $responseData = 1;
                 }
             }
-
+            
         }
-
+    
 
 
         public function getLogouts(Request $request){
             $email = $request->email;
             $token = $request->token;
-
+    
                 $this->updateToken('',$email);
                 $responseData = $this->responses('200', 'NO DATA', 'Logout Berhasil!');
-
-
+    
+    
             return json_encode($responseData);
         }
-
+    
 
         public function updateToken($token,$email){
             $ins =  DB::table('users')
@@ -248,12 +248,12 @@ class AuthController extends Controller
             ->update(['remember_token'=>$token]);
             return $ins;
         }
-
-
+    
+    
         public function responses($status,$data,$message){
             return array('status'=>$status,'data'=>$data,'message'=>$message);
         }
-
-
-
+    
+    
+        
 }
