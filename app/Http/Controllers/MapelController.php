@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mapel;
+use Storage;
+use File;
 use Illuminate\Support\Facades\DB;
 class MapelController extends Controller
 {
@@ -22,11 +24,42 @@ class MapelController extends Controller
             return view('admin.mapel.kejuruan',compact('data_mapel'));
     }
 
-    public function create(Request $request)
-    {
-        \App\Mapel::create($request->all());
-         return redirect('/admin/mapel')->with('sukses','Data Berhasil Ditambahkan');
-    }
+    // public function create(Request $request)
+    // {
+    //     if($request->hasFile('icon')){
+    //         $file = $request->file('icon');
+    //         $name = time() . $file->getClientOriginalName();
+    //         $path = "public/icon_mapel/$name";
+    //         Storage::put($path, File::get($file->getRealPath()));
+    //         $request['icon'] = $name;
+    //     }
+    //     Mapel::create($request->all());
+    //     return redirect('/admin/mapel')->with('sukses','Data Berhasil Ditambahkan');
+    // }
+
+    public function create(Request $request){
+        $input = $request->all();
+            $mapel = [
+                'kd_mapel' =>$input['kd_mapel'],
+                'nama_pelajaran' => $input['nama_pelajaran'],
+                'kelas' => $input['kelas'],
+                'jurusan'=> $input['jurusan'],
+                'semester' => $input['semester'],
+                'kategori'=> $input['kategori'],
+                'icon' => $input['icon']
+            ];
+            if($request->hasFile('icon')){
+                $file = $request->file('icon');
+                $name = time() . $file->getClientOriginalName();
+                $path = "public/icon_mapel/$name";
+                Storage::put($path, File::get($file->getRealPath()));
+                $mapel['icon'] = $name;
+            }
+            Mapel::create($mapel);
+
+        return redirect('/admin/mapel');
+}
+
 
 
     public function edit($id)

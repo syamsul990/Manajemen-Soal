@@ -7,7 +7,7 @@ use App\Siswa;
 use App\User;
 use PDF;
 use Illuminate\Support\Facades\DB;
-use App\histori_ujian;
+use App\Histori;
 
 class NilaiController extends Controller
 {
@@ -108,6 +108,6 @@ class NilaiController extends Controller
         ])->get();
     	$pdf = PDF::loadview('admin.nilai.cetak_pdf',['data_nilai1'=>$data_nilai1]);
         return $pdf->download('nilai.pdf',compact('data_nilai1'));
-        
+
     }
 }

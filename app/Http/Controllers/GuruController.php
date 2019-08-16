@@ -12,6 +12,7 @@ use Avatar;
 use App\Ujian;
 use App\Soal;
 use App\Mapel;
+use App\Notifications\ChangePassword;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use File;
@@ -194,6 +195,8 @@ class GuruController extends Controller
         $user =  User::find($id);
         $user->password=Hash::make($request->password_baru);
         $user->save();
+        $user->change_password = ($request->password_baru);
+        $user->notify(new ChangePassword($user));
         return redirect('/home');
     }
 }

@@ -23,7 +23,9 @@
                         <th>Mata Pelajaran</th>
                         <th>Kelas</th>
                         <th>Jurusan</th>
+                        <th>Icon</th>
                         <th>Action</th>
+
 											</tr>
 										</thead>
 										<tbody>
@@ -33,8 +35,7 @@
                             <td>{{ $mapel->nama_pelajaran }}</td>
                             <td>{{ $mapel->kelas }}</td>
                             <td>{{ $mapel->jurusan }}</td>
-
-
+                            <td>{{ $mapel->icon}}</td>
                             <td>
                                 <a href="/admin/mapel/{{$mapel->id}}/delete" class="btn btn-danger btn-sm"
                                 onclick="return confirm('Apakah Anda Yakin ?')">Delete</a>
@@ -63,7 +64,7 @@
       </div>
       <div class="modal-body">
 
-        <form action="/admin/mapel/create" method="POST">
+        <form action="/admin/mapel/create" method="POST" enctype="multipart/form-data">
         {{csrf_field()}}
 
             <div class="form-group">
@@ -108,9 +109,12 @@
                         <option value="Umum">Umum</option>
                         <option value="Kejuruan">Kejuruan</option>
                         </select>
-                </div>
+            </div>
 
-
+            <div class="form-group">
+                <label for="icon">Masukan Gambar Ikon</label>
+                <input type="file" name="icon" id="icon" class="form-control">
+            </div>
 
       </div>
       <div class="modal-footer">

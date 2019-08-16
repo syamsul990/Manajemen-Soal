@@ -10,6 +10,7 @@ use App\Siswa;
 use App\Histori;
 use Carbon\Carbon;
 use DB;
+use App\Notifications\ChangePassword;
 
 class AuthController extends Controller
 {
@@ -59,7 +60,7 @@ class AuthController extends Controller
                     'status_code'=> 406,
                 ]
             ]);
-            
+
         }if($valid==1){
             $this->updateToken($token,$request["email"]);
             return response()->json([
@@ -82,7 +83,7 @@ class AuthController extends Controller
                     'status_code'=> 200,
                 ]
             ]);
-           } 
+           }
 
         else{
             return response()->json([
@@ -93,7 +94,7 @@ class AuthController extends Controller
                 ]
             ]);
         }
-            
+
 
     }
     public function getMapelUjian(Request $request){
@@ -102,7 +103,7 @@ class AuthController extends Controller
         $semester = $request->semester;
         $time = Carbon::now();
         $time->toDateTimeString();
-        
+
         $dataMapel = DB::table('matapelajaran')
         ->where('ujian.jurusan', $jurusan)
         ->where('ujian.jenis_ujian', $jenis_ujian)
@@ -139,13 +140,13 @@ class AuthController extends Controller
         if(count($dataSoal)>0){
             foreach($dataSoal as $soal){
                   $datas[] = (object) array_merge((array) $soal, array('nomor' => $no));
-              $no++;  
+              $no++;
             }
             $data = array('status'=>'200','data'=>$datas, 'message'=>'Soal Tersedia!');
 
           return response()->json($data);
         } else {
-            return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Soal tidak tersedia!')); 
+            return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Soal tidak tersedia!'));
         }
     }
 
@@ -164,7 +165,7 @@ class AuthController extends Controller
                 $data = array('status'=>'200','data'=>$dataRiwayat, 'message'=>'Riwayat ujian tersedia!');
               return response()->json($data);
             } else {
-                return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Riwayat ujian tidak tersedia!')); 
+                return response()->json(array('status'=>'400', 'data'=>'NO DATA', 'message'=>'Riwayat ujian tidak tersedia!'));
             }
         }
 
@@ -179,8 +180,8 @@ class AuthController extends Controller
         $tanggal = Carbon::now();
         $tanggal->toDateString();
         $time = $request->time;
-      
-    
+
+
         $histori = array(
             'NIS'=>$NIS,
             'kd_mapel'=>$kd_mapel,
@@ -200,19 +201,45 @@ class AuthController extends Controller
 
         public function resetPassword(Request $request){
             $email = $request->email;
-            $password = $request->password;
-          
-            if(User::where('email',$email)->where('level',3)->exists()){
-                $reset = ['password'=>Hash::make($password)];
-                User::where('email',$email)->update($reset);
-                
-                $respon = array('status'=>200,'data'=>'No Data', 'messages'=>'Update Sukses!');
+            $password_new = $request->password_new;
+            $password_old = $request->password_old;
+
+            if(!User::where('email',$email)->where('level',3)->exists()){
+
+                $respon = array('status'=>400,'data'=>'No Data', 'messages'=>'Email tidak terdaftar!');
                 return response()->json($respon);
-            } else {
-                $respon = array('status'=>400,'data'=>'No Data', 'messages'=>'Email Tidak Terdaftar!');
+            } if(!Hash::check($request['password_old'], User::where('email', $request['email'])->first()->makeVisible('password')->password)){
+                $respon = array('status'=>400,'data'=>'No Data', 'messages'=>'Password Lama tidak cocok!');
+                return response()->json($respon);
+            }else {
+                $reset = ['password'=>Hash::make($password_new)];
+                User::where('email',$email)->update($reset);
+                // $reset->change_password = $request->password_new;
+                // $reset->notify(new ChangePassword($reset));
+
+                $respon = array('status'=>200,'data'=>'No Data', 'messages'=>'Ubah Password Berhasil!');
                 return response()->json($respon);
             }
         }
+
+        // public function resetPassword(Request $request){
+
+        //     $email = $request->email;
+        //     $password_new = $request->password_new;
+        //     $password_old = $request->password_old;
+
+        //     $validator = Validator::make($request->all(), [
+        //         'email' => 'required|email',
+        //         'password_new' => 'required',
+        //         'password_old'=> 'required'
+        //     ]);
+
+        //     if ($validator->fails()) {
+        //         $respon = array('status'=>400,'data'=>'No Data', 'messages'=>'');
+        //         return response()->json($respon);
+        //     }
+
+        // }
 
         public function validasiToken($email){
             $ser = User::where('email',$email)->get();
@@ -225,22 +252,22 @@ class AuthController extends Controller
                     return $responseData = 1;
                 }
             }
-            
+
         }
-    
+
 
 
         public function getLogouts(Request $request){
             $email = $request->email;
             $token = $request->token;
-    
+
                 $this->updateToken('',$email);
                 $responseData = $this->responses('200', 'NO DATA', 'Logout Berhasil!');
-    
-    
+
+
             return json_encode($responseData);
         }
-    
+
 
         public function updateToken($token,$email){
             $ins =  DB::table('users')
@@ -248,12 +275,12 @@ class AuthController extends Controller
             ->update(['remember_token'=>$token]);
             return $ins;
         }
-    
-    
+
+
         public function responses($status,$data,$message){
             return array('status'=>$status,'data'=>$data,'message'=>$message);
         }
-    
-    
-        
+
+
+
 }
